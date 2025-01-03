@@ -67,12 +67,14 @@
     <Compile Include="Assets\CodeBase\Services\Card\CardModel.cs" />
     <Compile Include="Assets\CodeBase\UI\ModuleUI.cs" />
     <Compile Include="Assets\CodeBase\UI\WriteModeWindow.cs" />
+    <Compile Include="Assets\CodeBase\Services\Card\Language.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\CodeBase\UI\DeleteButton.cs" />
     <Compile Include="Assets\CodeBase\UI\CardUI.cs" />
     <Compile Include="Assets\CodeBase\Services\Card\CardService.cs" />
     <Compile Include="Assets\CodeBase\UI\LanquageSelestor.cs" />
     <Compile Include="Assets\CodeBase\UI\TestModeWindow.cs" />
+    <Compile Include="Assets\CodeBase\UI\ListExtensions.cs" />
     <Compile Include="Assets\CodeBase\Services\Card\Card.cs" />
     <Compile Include="Assets\CodeBase\Installers\GameInstaller.cs" />
     <Compile Include="Assets\CodeBase\Services\Card\CardView.cs" />

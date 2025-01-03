@@ -1,4 +1,6 @@
-﻿namespace CodeBase.Services.Card
+﻿using System;
+
+namespace CodeBase.Services.Card
 {
     public class Card
     {
@@ -7,8 +9,8 @@
 
         public Card(string term, string definition)
         {
-            Term = term;
-            Definition = definition;
+            Term = term ?? throw new ArgumentNullException(nameof(term));
+            Definition = definition ?? throw new ArgumentNullException(nameof(definition));
         }
     }
 }

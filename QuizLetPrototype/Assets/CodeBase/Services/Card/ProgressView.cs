@@ -1,100 +1,55 @@
 ﻿using CodeBase.Services.Card;
 using System.Collections.Generic;
-using System.IO;
 using TMPro;
 using UnityEngine;
 
-public class ProgressView : MonoBehaviour
+namespace CodeBase.UI
 {
-    [SerializeField] private TextMeshProUGUI progressText;
-    private List<CardModel> _cards;
-    private int _currentIndex;
-    private int _completedCount;
-    private int _correctAnswers;  // Счетчик правильных ответов
-
-    private void Awake()
+    public class ProgressView : MonoBehaviour
     {
-        Initialize();
-    }
+        [SerializeField] private TextMeshProUGUI progressText;
+        private List<CardModel> _cards = new List<CardModel>();
+        private int _currentIndex;
+        private int _completedCount;
+        private int _correctAnswers;
 
-    public void Initialize()
-    {
-        _cards = new List<CardModel>();
-        _currentIndex = 0;
-        _completedCount = 0;
-        _correctAnswers = 0;
-        ShowCard();
-        UpdateProgress();
-    }
+        private void Awake() => Initialize();
 
-    public void OnCardClicked()
-    {
-        if (_cards.Count == 0) return;
-
-        _completedCount++;
-        _currentIndex = (_currentIndex + 1) % _cards.Count;
-        ShowCard();
-        UpdateProgress();
-    }
-
-    // Обработчик правильного ответа
-    public void OnCorrectAnswer()
-    {
-        _correctAnswers++;
-        UpdateProgress();
-    }
-
-    private void ShowCard()
-    {
-        if (_cards.Count == 0) return;
-
-        var currentCard = _cards[_currentIndex];
-        // Логика отображения карты, например:
-        // Выводим определение на экране
-        // questionText.text = currentCard.Definition;
-    }
-
-    private void UpdateProgress()
-    {
-        progressText.text = $"Прогресс: {_correctAnswers}";
-    }
-}
-
-
-
-public class ProgressManager
-{
-    private const string ProgressFileName = "progress.json";
-
-    public void SaveProgress(int correctAnswers, List<CardModel> cards)
-    {
-        var progressData = new ProgressData
+        public void Initialize()
         {
-            CorrectAnswers = correctAnswers,
-            Cards = cards
-        };
-
-        string json = JsonUtility.ToJson(progressData);
-        File.WriteAllText(Path.Combine(Application.persistentDataPath, ProgressFileName), json);
-    }
-
-    public ProgressData LoadProgress()
-    {
-        string filePath = Path.Combine(Application.persistentDataPath, ProgressFileName);
-
-        if (File.Exists(filePath))
-        {
-            string json = File.ReadAllText(filePath);
-            return JsonUtility.FromJson<ProgressData>(json);
+            _cards.Clear();
+            _currentIndex = 0;
+            _completedCount = 0;
+            _correctAnswers = 0;
+            ShowCard();
+            UpdateProgress();
         }
 
-        return new ProgressData();  // Если нет данных, возвращаем пустой прогресс
-    }
-}
+        public void OnCardClicked()
+        {
+            if (_cards.Count == 0) return;
+            _completedCount++;
+            _currentIndex = (_currentIndex + 1) % _cards.Count;
+            ShowCard();
+            UpdateProgress();
+        }
 
-[System.Serializable]
-public class ProgressData
-{
-    public int CorrectAnswers;
-    public List<CardModel> Cards;
+        public void OnCorrectAnswer()
+        {
+            _correctAnswers++;
+            UpdateProgress();
+        }
+
+        private void ShowCard()
+        {
+            if (_cards.Count == 0) return;
+            var currentCard = _cards[_currentIndex];
+            // Logic for showing the current card's definition.
+        }
+
+        private void UpdateProgress()
+        {
+            progressText.text = $"Progress: {_correctAnswers}/{_cards.Count}";
+        }
+    }
 }

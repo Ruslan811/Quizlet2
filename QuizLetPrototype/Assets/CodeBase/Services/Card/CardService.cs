@@ -1,38 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CodeBase.Services.Card
 {
+
     public class CardService : ICardManager
-    {
-        private List<CardModel> _cards = new List<CardModel>();
-        private Language _currentLanguage;
-
-        public void SetLanguage(Language language)
         {
-            _currentLanguage = language;
-        }
+            private List<CardModel> _cards = new List<CardModel>();
+            private Language _currentLanguage;
 
-        public void CreateCard(string term, string definition, Language language)
-        {
-            _cards.Add(new CardModel(term, definition, language));
-        }
+            public void SetLanguage(Language language) => _currentLanguage = language;
 
-        public void DeleteCard(string term)
-        {
-            _cards.RemoveAll(card => card.Term == term);
-        }
+            public void CreateCard(string term, string definition, Language language)
+            {
+                if (string.IsNullOrEmpty(term) || string.IsNullOrEmpty(definition))
+                    throw new ArgumentException("Term and definition cannot be empty.");
 
-        public List<CardModel> GetAllCards()
-        {
-            return _cards;
-        }
+                _cards.Add(new CardModel(term, definition, language));
+            }
 
-        public bool IsCardCompleted(CardModel card)
-        {
-            // Для примера всегда возвращаем false
-            return false;
+            public void DeleteCard(string term)
+            {
+                var card = _cards.FirstOrDefault(c => c.Term == term);
+                if (card != null)
+                {
+                    _cards.Remove(card);
+                }
+            }
+
+            public List<CardModel> GetAllCards() => _cards;
+
+            public bool IsCardCompleted(CardModel card) => _cards.Contains(card);
         }
-    }
 
     public interface ICardManager
     {
@@ -43,11 +43,5 @@ namespace CodeBase.Services.Card
         void SetLanguage(Language language);
     }
 
-}
-
-public enum Language
-{
-    English,
-    Russian
 }
 

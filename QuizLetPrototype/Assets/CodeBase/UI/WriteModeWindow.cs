@@ -24,7 +24,7 @@ namespace CodeBase.UI
         private int _totalQuestions;
         private int _correctAnswers;
 
-        
+
 
         public void Initialize(List<CardModel> allCards, Language selectedLanguage)
         {
@@ -33,7 +33,7 @@ namespace CodeBase.UI
             _totalQuestions = _availableCards.Count;
             _currentQuestionIndex = 0;
             _correctAnswers = 0;
-            
+
 
             ShowNextQuestion();
         }
